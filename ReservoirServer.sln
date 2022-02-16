@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReservoirServer", "ReservoirServer\ReservoirServer.csproj", "{A15DF483-824F-4918-A327-E2D173ADA443}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActiveMQTester", "..\ActiveMQTester\ActiveMQTester.csproj", "{2D06635B-1178-41C8-9ACF-B7AF54D7FF2A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A15DF483-824F-4918-A327-E2D173ADA443}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A15DF483-824F-4918-A327-E2D173ADA443}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A15DF483-824F-4918-A327-E2D173ADA443}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A15DF483-824F-4918-A327-E2D173ADA443}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D06635B-1178-41C8-9ACF-B7AF54D7FF2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D06635B-1178-41C8-9ACF-B7AF54D7FF2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D06635B-1178-41C8-9ACF-B7AF54D7FF2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D06635B-1178-41C8-9ACF-B7AF54D7FF2A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A25DE5C-C3D6-4C7C-9D42-BFA030EBF309}
+	EndGlobalSection
+EndGlobal

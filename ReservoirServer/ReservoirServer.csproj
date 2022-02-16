@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Version>1.0.5</Version>
+    <Authors>Jennings(Aka NeNe)</Authors>
+    <Company>YeJi Corperation</Company>
+    <Copyright>Copyleft with GPLv3 2021-2022 All Rights Reversed!</Copyright>
+    <PackageId>ReservoirServer</PackageId>
+    <PackageProjectUrl>https://github.com/StackExplode/ReservoirServer</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Apache.NMS.ActiveMQ.Core" Version="1.7.2.1" />
+    <PackageReference Include="Apache.NMS.Core" Version="1.7.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+</Project>
