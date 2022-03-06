@@ -14,6 +14,7 @@ namespace ReservoirServer
     public delegate void OnBoxDisconnectedDlg(IComClient client);
     public delegate void OnBoxDataRecDlg(IComClient client, string data);
 
+
     class SimpleBoxServer
     {
         BoxTCPDriver tcpserver = new BoxTCPDriver();
@@ -22,6 +23,8 @@ namespace ReservoirServer
         public virtual event OnBoxConnectedDlg OnBoxConnected;
         public virtual event OnBoxDisconnectedDlg OnBoxDisconnected;
         public virtual event OnBoxDataRecDlg OnBoxDataRec;
+
+        private string _charset = GlobalConfig.BoxServerCharset;
 
         public SimpleBoxServer(string serverID, IPAddress ip, ushort port)
         {
@@ -37,7 +40,7 @@ namespace ReservoirServer
         public virtual void SendPack(IComClient client,string data)
         {
             
-            tcpserver.SendDataAsync(client, Encoding.UTF8.GetBytes(data));
+            tcpserver.SendDataAsync(client, Encoding.GetEncoding(_charset).GetBytes(data));
         }
 
         protected virtual void Tcpserver_OnTransmitError(IComClient client, Exception ex)
@@ -47,7 +50,7 @@ namespace ReservoirServer
 
         protected virtual void Tcpserver_OnComDataReceived(IComClient client, byte[] data)
         {
-            string s = Encoding.UTF8.GetString(data);
+            string s = Encoding.GetEncoding(_charset).GetString(data);
             OnBoxDataRec?.Invoke(client, s);
         }
 

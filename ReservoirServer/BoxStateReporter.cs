@@ -61,9 +61,10 @@ namespace ReservoirServer
 
         private void Report(KeyValuePair<string, Box> val)
         {
+            Box box = val.Value;
             try
             {
-                Box box = val.Value;
+                
                 DateTime now = DateTime.Now;
 
                 box.locker.EnterWriteLock();
@@ -98,6 +99,11 @@ namespace ReservoirServer
             catch (System.Exception ex)
             {
                 Console.Error.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                box.locker.ExitWriteLock();
+                box.locker.ExitReadLock();
             }
 
         }

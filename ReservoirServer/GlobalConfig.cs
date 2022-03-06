@@ -21,6 +21,7 @@ namespace ReservoirServer
         public static string TopicName => ini.GetValue("activemq", "topicname");
         public static byte ReporterMaxCoreUsage => (byte)ini.GetInteger("reporter", "maxcoreusage");
         public static int ReportInterval => ini.GetInteger("reporter", "reportinterval");
+        public static string BoxServerCharset=> ini.GetValue("boxserver", "charset");
 
         public static void ParseConfigFile(string fname)
         {

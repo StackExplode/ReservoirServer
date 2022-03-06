@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -15,7 +16,7 @@ namespace ReservoirServer
     class Program
     {
         //TODO: Log file, Safety(Encryption), JSON error catch, system service
-        public static readonly string version = "1.05";
+        public static readonly string version = "1.06";
 
 #if DEBUG
         public static string VERSION => version + "a";
@@ -32,6 +33,7 @@ namespace ReservoirServer
         static void Main(string[] args)
         {
             CommandParser cmd = new CommandParser(args);
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             string inipath = null;
             bool ver = false;
             cmd.Parse(out inipath, out logpath, out ver);

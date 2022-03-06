@@ -92,11 +92,12 @@ namespace ReservoirServer
         public void SimpleBoxDataSubscribeHandler(string json)
         {
             SimpleSubscribeData subdata = JsonConvert.DeserializeObject<SimpleSubscribeData>(json);
-            SimpleBoxData boxdata = new SimpleBoxData()
+            SimpleBoxData boxdata = new BoxDataWithDate()
             {
                 Type = subdata.Type,
                 Message = subdata.Message,
                 PlatformN = subdata.PlatformN,
+                DateTime = subdata.DateTime,
             };
 
             foreach (string bid in subdata.DeviceN)
@@ -105,7 +106,7 @@ namespace ReservoirServer
                 if (box != null)
                 {
                     boxdata.DeviceN = bid;
-                    string senddata = JsonConvert.SerializeObject(boxdata);
+                    string senddata = JsonConvert.SerializeObject(boxdata, jsonSettings);
                     box.locker.EnterReadLock();
                     var client = box.ComClient;
                     box.locker.ExitReadLock();

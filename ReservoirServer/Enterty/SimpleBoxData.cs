@@ -9,9 +9,15 @@ namespace ReservoirServer.Enterty
         public string PlatformN { get; set; }
         public string DeviceN { get; set; }
         public string Type { get; set; }
+        
 
         public object Message { get; set; }
 
+    }
+
+    class BoxDataWithDate : SimpleBoxData
+    {
+        public DateTime @DateTime;
     }
 
     class BoxDataHeartBeat : IBoxData
