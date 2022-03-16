@@ -102,8 +102,10 @@ namespace ReservoirServer
             }
             finally
             {
-                box.locker.ExitWriteLock();
-                box.locker.ExitReadLock();
+                if(box.locker.IsWriteLockHeld)
+                    box.locker.ExitWriteLock();
+                if (box.locker.IsReadLockHeld)
+                    box.locker.ExitReadLock();
             }
 
         }
