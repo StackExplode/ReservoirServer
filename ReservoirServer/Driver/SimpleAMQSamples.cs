@@ -89,6 +89,7 @@ namespace ReservoirServer.Driver
         public void OnMessage(IMessage message)
         {
             ITextMessage textMessage = message as ITextMessage;
+            //Console.WriteLine(textMessage);
             if (this.OnMessageReceived != null)
             {
                 this.OnMessageReceived(textMessage.Text);

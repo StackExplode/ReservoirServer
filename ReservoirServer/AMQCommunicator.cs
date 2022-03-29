@@ -33,7 +33,7 @@ namespace ReservoirServer
         {
             Dispose();
             _sender = new SimpleQueueSender(queue_name, uri);
-            _subscriber = new SimpleTopicSubscriber(topic_name, uri, "xxx", "zzz", null);
+            _subscriber = new SimpleTopicSubscriber(topic_name, uri, "client_"+ platform_id, "consumer_"+ platform_id, null);
             _subscriber.OnMessageReceived += _subscriber_OnMessageReceived;
         }
 

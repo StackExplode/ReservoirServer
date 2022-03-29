@@ -104,7 +104,7 @@ namespace ReservoirServer.Driver
                 client.ReceiveTimeout = TransmitTimeout;
                 byte[] buff = new byte[client.ReceiveBufferSize];
                 client.GetStream().ReadTimeout = TransmitTimeout;
-                BoxTCPClient carclient = new BoxTCPClient(client);
+                BoxTCPClient carclient = new BoxTCPClient(client) { IsAlive = true };
                 RecState state = new RecState { Client = carclient, Buffer = buff };
                 this.OnComClientConnected?.Invoke(carclient);
                 state.Stream.BeginRead(state.Buffer, 0, state.Buffer.Length, HandleClientAsyncRec, state);
@@ -118,16 +118,18 @@ namespace ReservoirServer.Driver
                 return;
             RecState state = (RecState)res.AsyncState;
             TcpClient client = state.Client.Client;
-            byte[] oldbuff = state.Buffer;
-            NetworkStream ns = state.Stream;
             if (client == null)
                 return;
-            if(client.Connected == false)
+
+            byte[] oldbuff = state.Buffer;
+            
+            if(client.Connected == false )
             {
                 this.OnComClientDisconneted?.Invoke(state.Client);
                 state.Client.Disconnected();
+                return;
             }
-                
+            NetworkStream ns = state.Stream;
 
             int b2r = 0;
             try
@@ -136,6 +138,10 @@ namespace ReservoirServer.Driver
                
             }
             catch (System.IO.IOException)
+            {
+                b2r = 0;
+            }
+            catch(SocketException)
             {
                 b2r = 0;
             }
@@ -160,7 +166,8 @@ namespace ReservoirServer.Driver
                 
             else
             {
-                if(AsyncRecBuffer)
+                state.Client.IsAlive = true;
+                if (AsyncRecBuffer)
                 {
                     byte[] buffer = new byte[b2r];
                     Buffer.BlockCopy(state.Buffer, 0, buffer, 0, b2r);

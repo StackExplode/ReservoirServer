@@ -35,9 +35,9 @@ namespace ReservoirServer.Enterty
             {
                 comClient.OnDisconnected += () =>
                 {
-                    locker.EnterWriteLock();
+                    //locker.EnterWriteLock();
                     State = BoxState.Offline;
-                    locker.ExitWriteLock();
+                    //locker.ExitWriteLock();
                 };
             }
         }

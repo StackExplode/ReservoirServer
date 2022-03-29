@@ -56,6 +56,7 @@ namespace ReservoirServer.Driver
         {
             Client.Close();
             IsAlive = false;
+            OnDisconnected?.Invoke();
         }
 
         public void Disconnected()

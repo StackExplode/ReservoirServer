@@ -14,7 +14,20 @@ namespace ReservoirServer.Driver
             BoxTCPClient carclient = client as BoxTCPClient;
             NetworkStream ns = carclient.Client.GetStream();
             ns.WriteTimeout = TransmitTimeout;
-            var task = ns.WriteAsync(data, 0, data.Length);
+            Task task = null;
+            try
+            {
+                task = ns.WriteAsync(data, 0, data.Length);
+            }
+            catch(System.IO.IOException)
+            {
+                client.Disconnected();
+            }
+            catch(SocketException)
+            {
+                client.Disconnected();
+            }
+            
             return task;
             //task.ContinueWith((t) => { this.OnComDataSent?.Invoke(client, data.Length); });
 

@@ -105,12 +105,15 @@ namespace ReservoirServer
                 Box box = _list[bid];
                 if (box != null)
                 {
+                    bool online = false;
                     boxdata.DeviceN = bid;
                     string senddata = JsonConvert.SerializeObject(boxdata, jsonSettings);
                     box.locker.EnterReadLock();
                     var client = box.ComClient;
+                    online = (box.State == BoxState.Online);
                     box.locker.ExitReadLock();
-                    _server.SendPack(client, senddata);
+                    if(online)
+                        _server.SendPack(client, senddata);
                 }
             }
         }

@@ -16,7 +16,7 @@ namespace ReservoirServer
     class Program
     {
         //TODO: Log file, Safety(Encryption), JSON error catch, system service
-        public static readonly string version = "1.07";
+        public static readonly string version = "1.08";
 
 #if DEBUG
         public static string VERSION => version + "a";
