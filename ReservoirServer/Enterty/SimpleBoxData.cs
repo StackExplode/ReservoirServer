@@ -17,7 +17,22 @@ namespace ReservoirServer.Enterty
 
     class BoxDataWithDate : SimpleBoxData
     {
-        public DateTime @DateTime;
+        public DateTime @DateTime { get; set; }
+    }
+
+    class BoxAlertData : BoxDataWithDate
+    {
+        public DateTime DateEnd { get; set; }
+        public BoxAlertData() { }
+        public BoxAlertData(BoxDataWithDate data)
+        {
+            this.PlatformN = data.PlatformN;
+            this.DeviceN = data.DeviceN;
+            this.Type = data.Type;
+            this.Message = data.Message;
+            this.DateTime = data.DateTime;
+
+        }
     }
 
     class BoxDataHeartBeat : IBoxData

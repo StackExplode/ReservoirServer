@@ -14,7 +14,8 @@ namespace ReservoirServer.Enterty
         C0202_InfoResponse,
         C0203_ChartResponse,
         C0301_AlertData,
-        C0302_WeatherData
+        C0302_WeatherData,
+        C0401_PreReleaseData,
     }
 
     static class AMQDataTypeString
@@ -29,6 +30,7 @@ namespace ReservoirServer.Enterty
             {"0203", AMQDataType.C0203_ChartResponse},
             {"0301", AMQDataType.C0301_AlertData},
             {"0302", AMQDataType.C0302_WeatherData},
+            {"0401", AMQDataType.C0401_PreReleaseData},
         };
 
         public static AMQDataType String2Type(string s)

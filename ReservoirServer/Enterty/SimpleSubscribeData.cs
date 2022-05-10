@@ -15,6 +15,11 @@ namespace ReservoirServer.Enterty
         public object Message { get; set; }
     }
 
+    class SubscribDataAlertData : SimpleSubscribeData
+    {
+        public DateTime DateEnd { get; set; }
+    }
+
     public interface ISubscribeData {
         //public string Type { get; set; }
     }

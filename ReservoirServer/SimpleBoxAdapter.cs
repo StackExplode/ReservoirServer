@@ -89,18 +89,9 @@ namespace ReservoirServer
             _remote.SendQueue(json);
         }
 
-        public void SimpleBoxDataSubscribeHandler(string json)
+        protected void SendDataToMultiBox(SimpleBoxData boxdata, string[] boxes)
         {
-            SimpleSubscribeData subdata = JsonConvert.DeserializeObject<SimpleSubscribeData>(json);
-            SimpleBoxData boxdata = new BoxDataWithDate()
-            {
-                Type = subdata.Type,
-                Message = subdata.Message,
-                PlatformN = subdata.PlatformN,
-                DateTime = subdata.DateTime,
-            };
-
-            foreach (string bid in subdata.DeviceN)
+            foreach (string bid in boxes)
             {
                 Box box = _list[bid];
                 if (box != null)
@@ -112,10 +103,39 @@ namespace ReservoirServer
                     var client = box.ComClient;
                     online = (box.State == BoxState.Online);
                     box.locker.ExitReadLock();
-                    if(online)
+                    if (online)
                         _server.SendPack(client, senddata);
                 }
             }
+        }
+
+        public void SimpleBoxDataSubscribeHandler(string json)
+        {
+            SimpleSubscribeData subdata = JsonConvert.DeserializeObject<SimpleSubscribeData>(json);
+            SimpleBoxData boxdata = new BoxDataWithDate()
+            {
+                Type = subdata.Type,
+                Message = subdata.Message,
+                PlatformN = subdata.PlatformN,
+                DateTime = subdata.DateTime,
+            };
+
+            SendDataToMultiBox(boxdata, subdata.DeviceN);
+        }
+
+        public void AlertBoxDataSubscribeHandler(string json)
+        {
+            SubscribDataAlertData subdata = JsonConvert.DeserializeObject<SubscribDataAlertData>(json);
+            SimpleBoxData boxdata = new BoxAlertData()
+            {
+                Type = subdata.Type,
+                Message = subdata.Message,
+                PlatformN = subdata.PlatformN,
+                DateTime = subdata.DateTime,
+                DateEnd = subdata.DateEnd
+            };
+
+            SendDataToMultiBox(boxdata, subdata.DeviceN);
         }
 
         public void StartJob()
@@ -146,9 +166,12 @@ namespace ReservoirServer
                         case AMQDataType.C0201_RTData:
                         case AMQDataType.C0202_InfoResponse:
                         case AMQDataType.C0203_ChartResponse:
-                        case AMQDataType.C0301_AlertData:
                         case AMQDataType.C0302_WeatherData:
+                        case AMQDataType.C0401_PreReleaseData:
                             SimpleBoxDataSubscribeHandler(message);
+                            break;
+                        case AMQDataType.C0301_AlertData:
+                            AlertBoxDataSubscribeHandler(message);
                             break;
                     }
                 }
