@@ -31,10 +31,18 @@ namespace ReservoirServer
         //Init will start communication
         public void Initialization()
         {
+            string user = null, pass = null;
+            if (GlobalConfig.AMQIsAuth != 0)
+            {
+                user = GlobalConfig.AMQUsername;
+                pass = GlobalConfig.AMQPassword;
+            }
+
             Dispose();
-            _sender = new SimpleQueueSender(queue_name, uri);
-            _subscriber = new SimpleTopicSubscriber(topic_name, uri, "client_"+ platform_id, "consumer_"+ platform_id, null);
+            _sender = new SimpleQueueSender(queue_name, uri, user, pass);
+            _subscriber = new SimpleTopicSubscriber(topic_name, uri, "client_" + platform_id, "consumer_" + platform_id, null, user, pass);
             _subscriber.OnMessageReceived += _subscriber_OnMessageReceived;
+          
         }
 
         public void SendQueue(string data)

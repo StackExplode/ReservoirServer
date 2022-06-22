@@ -17,12 +17,16 @@ namespace ReservoirServer.Driver
         private readonly ISession session;
         private readonly IMessageProducer producer;
         private bool isDisposed = false;
+ 
 
-        public SimpleTopicPublisher(string topicName, string brokerUri)
+        public SimpleTopicPublisher(string topicName, string brokerUri, string UserName, string PassWord)
         {
             this.topicName = topicName;
             this.connectionFactory = new ConnectionFactory(brokerUri);
-            this.connection = this.connectionFactory.CreateConnection();
+            if(UserName == null)
+                this.connection = this.connectionFactory.CreateConnection();
+            else
+                this.connection = this.connectionFactory.CreateConnection(UserName,PassWord);
             this.connection.Start();
             this.session = connection.CreateSession();
             ActiveMQTopic topic = new ActiveMQTopic(topicName);
@@ -71,12 +75,17 @@ namespace ReservoirServer.Driver
         private bool isDisposed = false;
         public event MessageReceivedDelegate OnMessageReceived;
 
-        public SimpleTopicSubscriber(string topicName, string brokerUri, string clientId, string consumerId,string filter)
+
+
+        public SimpleTopicSubscriber(string topicName, string brokerUri, string clientId, string consumerId,string filter, string UserName, string PassWord)
         {
             string ft = filter == null ? null : $"filter='{filter}'";
             this.topicName = topicName;
             this.connectionFactory = new ConnectionFactory(brokerUri);
-            this.connection = this.connectionFactory.CreateConnection();
+            if(UserName == null)
+                this.connection = this.connectionFactory.CreateConnection();
+            else
+                this.connection = this.connectionFactory.CreateConnection(UserName,PassWord);
             this.connection.ClientId = clientId;
             this.connection.Start();
             this.session = connection.CreateSession();
@@ -122,11 +131,16 @@ namespace ReservoirServer.Driver
         private readonly IMessageProducer producer;
         private string queue_name;
 
-        public SimpleQueueSender(string queueName, string brokerUri, AcknowledgementMode ackmode = AcknowledgementMode.AutoAcknowledge)
+ 
+
+        public SimpleQueueSender(string queueName, string brokerUri,string UserName,string PassWord, AcknowledgementMode ackmode = AcknowledgementMode.AutoAcknowledge)
         {
             this.queue_name = queueName;
             factory = new ConnectionFactory(brokerUri);
-            connection = factory.CreateConnection();
+            if (UserName == null)
+                connection = factory.CreateConnection();
+            else
+                connection = factory.CreateConnection(UserName, PassWord);
             this.connection.Start();
             session = connection.CreateSession(ackmode);
             ActiveMQQueue queue = new ActiveMQQueue(queueName);
@@ -168,11 +182,16 @@ namespace ReservoirServer.Driver
         private readonly IMessageConsumer consumer;
         public event MessageReceivedDelegate OnMessageReceived;
 
-        public SimpleQueueReciever(string queueName, string brokerUri, string clientId, string filter, AcknowledgementMode ackmode = AcknowledgementMode.AutoAcknowledge)
+
+
+        public SimpleQueueReciever(string queueName, string brokerUri, string clientId, string filter, string UserName, string PassWord, AcknowledgementMode ackmode = AcknowledgementMode.AutoAcknowledge)
         {
             string ft = filter == null ? null : $"filter='{filter}'";
             connectionFactory = new ConnectionFactory(brokerUri);
-            connection = connectionFactory.CreateConnection();
+            if (UserName == null)
+                connection = connectionFactory.CreateConnection();
+            else
+                connection = connectionFactory.CreateConnection(UserName, PassWord);
             connection.ClientId = clientId;
             connection.Start();
             session = connection.CreateSession(ackmode);
