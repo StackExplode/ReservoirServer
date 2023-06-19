@@ -17,7 +17,7 @@ namespace ReservoirServer
         public IniReader(string file, string commentDelimiter = ";")
         {
             CommentDelimiter = commentDelimiter;
-            TheFile = file;
+            TheFile = file; 
         }
 
         /// <summary>

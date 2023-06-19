@@ -47,7 +47,7 @@ namespace ReservoirServer
             Console.WriteLine("ReservoirServer v" + VERSION + " author: Jennings(aka NeNe)");
             var color = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Warnning: This version is for testing, no system service, data encryption, log file or exception handler be implemented!");
+            Console.WriteLine("Warnning: This version is for testing, no system service, data encryption, log file or exception handler being implemented!");
             Console.ForegroundColor = color;
 
             Console.WriteLine("Start to initialization...");

@@ -1,7 +1,10 @@
 {
   "profiles": {
     "ReservoirServer": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "remoteDebugEnabled": false,
+      "remoteDebugMachine": "us.jloli.cc",
+      "authenticationMode": "None"
     }
   }
 }
